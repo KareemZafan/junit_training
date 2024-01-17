@@ -114,5 +114,9 @@ public class CalculatorTests {
         assertEquals(text, new StringBuilder(text).reverse().toString());
     }
 
-
+    @Test
+    void testStringFormatting() {
+        String text = "Hello Intake%s";
+        assertEquals("Hello Intake-44", String.format(text, -44));
+    }
 }
