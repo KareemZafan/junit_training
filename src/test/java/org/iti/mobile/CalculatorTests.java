@@ -32,12 +32,11 @@ public class CalculatorTests {
     }
 
     static Stream<Arguments> provideStringsForIsBlank() {
-        return Stream.of(
-                Arguments.of(null, true),
-                Arguments.of("", true),
-                Arguments.of("  ", true),
-                Arguments.of("not blank", false)
-        );
+        return Stream.of(Arguments.of(null, true), Arguments.of("", true), Arguments.of("  ", true), Arguments.of("not blank", false));
+    }
+
+    static Stream<String> providePalindromeStrings() {
+        return Stream.of("madam", "radar", "level", "1234321");
     }
 
     @BeforeEach
@@ -92,7 +91,7 @@ public class CalculatorTests {
     }
 
     @ParameterizedTest
-    @ValueSource(doubles = {70, 80, 10, 100})
+    @ValueSource(doubles = {70, 80, 90, 100})
     void testNumberLargeThan50(double input) {
         Assertions.assertTrue(input > 50);
     }
@@ -104,9 +103,16 @@ public class CalculatorTests {
     }
 
     @ParameterizedTest
-    @MethodSource("provideStringsForIsBlank")
+    @MethodSource(value = "provideStringsForIsBlank")
     void isBlank_ShouldReturnTrueForNullOrBlankStrings(String input, boolean expected) {
         assertEquals(expected, StringUtils.isBlank(input));
     }
+
+    @ParameterizedTest
+    @MethodSource("providePalindromeStrings")
+    void testPalindromeStrings(String text) {
+        assertEquals(text, new StringBuilder(text).reverse().toString());
+    }
+
 
 }
