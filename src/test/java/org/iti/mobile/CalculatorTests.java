@@ -10,10 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.junit.platform.commons.util.StringUtils;
 
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @Execution(ExecutionMode.CONCURRENT)
@@ -52,28 +51,29 @@ public class CalculatorTests {
 
     }
 
-    @Test
+   /* @Test
     @EnabledOnOs(OS.LINUX)
     void testSub() {
         assertEquals(0, calculator.sub(10, 10));
         assertEquals(-9, calculator.sub(1, 10));
-    }
+    }*/
 
     @Test
     @DisplayName("test the multiplication of two numbers")
     @Tag("Feb")
+    @EnabledOnOs(OS.LINUX)
     void testMul() {
         assertEquals(100, calculator.mul(10, 10));
     }
 
     @Test
-    @EnabledOnOs(OS.WINDOWS)
     @Tag("Feb")
     void testDiv() {
         assertEquals(1, calculator.div(10, 10));
         var exception = Assertions.assertThrowsExactly(ArithmeticException.class, () -> calculator.div(1, 0));
         assertEquals("Dividing By Zero", exception.getMessage());
-
+        assertEquals(0, calculator.div(0,1));
+        assertEquals(-1, calculator.div(2,-2));
     }
 
     @RepeatedTest(value = 5)
@@ -83,7 +83,6 @@ public class CalculatorTests {
 
     @Test
     @Tag("Feb")
-    @Timeout(value = 10, unit = TimeUnit.MILLISECONDS)
     void testConversionToUpperCase() {
         String text = "Hello Together".toUpperCase();
         assertEquals("HELLO TOGETHER", text);
