@@ -116,6 +116,6 @@ public class CalculatorTests {
     @Test
     void testStringFormatting() {
         String text = "Hello Intake%s";
-        assertEquals("Hello Intake-4", String.format(text, -44));
+        assertEquals("Hello Intake-44", String.format(text, -44));
     }
 }
